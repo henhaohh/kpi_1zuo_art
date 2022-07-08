@@ -145,7 +145,7 @@ router.post('/login/:id', (req, res) => {
                     if (ip.substr(0, 7) == "::ffff:") {
                         ip = ip.substr(7)
                     }
-                    USER.db.promise().query("INSER INTO ?? SET ?", ["hh_loginlog", {
+                    USER.db.promise().query("INSERT INTO ?? SET ?", ["hh_loginlog", {
                         uid: id,
                         ua: req.headers['user-agent'],
                         ip,
