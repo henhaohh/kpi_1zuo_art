@@ -1,0 +1,22 @@
+{
+    "site": {
+        "domain": "kpi.1zuo.art"
+    },
+    "author": {
+        "name": "henhao",
+        "email": "henhaohh@163.com",
+        "homepage": "https://www.henhaohh.com"
+    },
+    "DB": {
+        "host": "121.41.227.129",
+        "user": "kpi_1zuo_art",
+        "password": "Gf4HMBcKRxJfirC3",
+        "database": "kpi_1zuo_art",
+        "waitForConnections": true,
+        "connectionLimit": 10,
+        "queueLimit": 0,
+        "port": 3306,
+        "connectTimeout": 1e4,
+        "debug": false
+    }
+}
