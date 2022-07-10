@@ -34,7 +34,8 @@ const WHITELIST = [`id`, `name`, `password`, `gender`, `nickname`, `realname`, `
 const pool = db.promise();
 // 获取
 let get = ({ id = 0, page = 1, pagesize = 20 }) => {
-    return pool.query("SELECT * FROM ??.?? WHERE ?? = ? LIMIT ?,?", [DB.database, TABLENAME, 'id', id, (page - 1) * pagesize, pagesize]);
+    id = String(id).split(',').map(v=>Number(v.trim()));
+    return pool.query("SELECT * FROM ??.?? WHERE ?? in (?) LIMIT ?,?", [DB.database, TABLENAME, 'id', id, (page - 1) * pagesize, pagesize]);
 }
 // 添加
 let add = (prop = {}) => {
@@ -81,6 +82,8 @@ let update = (prop = {}) => {
                 if (prop.id) {
                     delete prop.id
                 }
+                // 设置更新时间为当前时间戳
+                prop.updatetime = { toSqlString: function() { return 'CURRENT_TIMESTAMP()'; } };
                 return pool.query("UPDATE ??.?? SET ? WHERE ?? = ?", [DB.database, TABLENAME, prop, 'id', r.id]);
             } else {
                 return Promise.reject('NO Salt');

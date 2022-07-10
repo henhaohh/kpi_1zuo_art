@@ -3,12 +3,14 @@ const express = require('express');
 const router = express.Router();
 const USER = require(path.resolve(__dirname, '../', 'inc', 'user.class'));
 const { cryptPassword } = require(path.resolve(__dirname, '../', 'inc', 'util'));
+
+
 /**
  * 获取
  */
-router.get("/get/:id", (req, res) => {
+router.get("/get", (req, res) => {
     let ret = {};
-    let { id } = req.params;
+    let { id } = req.query;
     if (!id) {
         return res.status(500).json({
             code: 500,
@@ -74,10 +76,25 @@ router.post('/add', (req, res) => {
 });
 /**
  * 移除
+ * fetch('/ajax/user/remove',{
+        method:"POST",
+        body:JSON.stringify({
+            id:9
+        }),
+        headers: {
+        'Accept': 'www-form-urlencoded',
+        'Content-Type': 'application/json',
+            "authentication":"49a2d00fadb9ec65a000d68631075aa9f559f9fa165ccad9ca824565e11ba013"
+      },
+    })
+    .then(r=>r.json())
+    .then(r=>{
+        console.log(r)
+    });
  */
-router.post('/remove/:id', (req, res) => {
+router.post('/remove', (req, res) => {
     let ret = {};
-    let { id } = req.params;
+    let { id } = req.body;
     if (!id) {
         return res.status(500).json({
             code: 500,
@@ -99,10 +116,26 @@ router.post('/remove/:id', (req, res) => {
 });
 /**
  * 修改
+ * fetch('/ajax/user/update',{
+        method:"POST",
+        body:JSON.stringify({
+            id:10,
+            gender:2
+        }),
+        headers: {
+        'Accept': 'www-form-urlencoded',
+        'Content-Type': 'application/json',
+            "authentication":"49a2d00fadb9ec65a000d68631075aa9f559f9fa165ccad9ca824565e11ba013"
+      },
+    })
+    .then(r=>r.json())
+    .then(r=>{
+        console.log(r)
+    });
  */
-router.post('/update/:id', (req, res) => {
+router.post('/update', (req, res) => {
     let ret = {};
-    let { id } = req.params;
+    let { id } = req.body;
     if (!id) {
         return res.status(500).json({
             code: 500,
@@ -125,18 +158,32 @@ router.post('/update/:id', (req, res) => {
 });
 /**
  * 登陆
+ * fetch('/ajax/user/login?id=9',{
+        method:"POST",
+        body:JSON.stringify({
+            name:"我是谁2",
+            password:"select1"
+        }),
+        headers: {
+        'Accept': 'www-form-urlencoded',
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(r=>r.json())
+    .then(r=>{
+        console.log(r)
+    });
  */
-router.post('/login/:id', (req, res) => {
+router.post('/login', (req, res) => {
     let ret = {};
-    let { id } = req.params;
-    let { password } = req.body;
-    if (!id || !password) {
+    let { name, password } = req.body;
+    if (!name || !password) {
         return res.status(500).json({
             code: 500,
             message: 'MISS PARAMS'
         });
     }
-    USER.db.promise().query("SELECT * FROM ?? WHERE `id` = ? limit 1", [USER.TABLENAME, id])
+    USER.db.promise().query("SELECT * FROM ?? WHERE `name` = ? limit 1", [USER.TABLENAME, name])
         .then((rows, fields) => {
             if (rows[0].length) {
                 let userInfo = rows[0][0];
@@ -145,15 +192,17 @@ router.post('/login/:id', (req, res) => {
                     if (ip.substr(0, 7) == "::ffff:") {
                         ip = ip.substr(7)
                     }
+                    // 我这里token的算法是用户密码用当前时间戳作为密码的sha256之后的结果
+                    let token = cryptPassword(userInfo.password, String(Date.now()));
                     USER.db.promise().query("INSERT INTO ?? SET ?", ["hh_loginlog", {
-                        uid: id,
+                        uid: userInfo['id'],
                         ua: req.headers['user-agent'],
                         ip,
-                        token: cryptPassword()
+                        token
                     }]);
                     ret.code = 1;
                     ret.message = 'OK';
-                    ret.data = userInfo;
+                    ret.data = { token, ...userInfo };
                     return res.json(ret);
                 } else {
                     ret.code = 0;
