@@ -9,7 +9,7 @@ const _ = require('lodash');
  */
 function sql_buildSafeQuery(query = {}, whiteList = []) {
     let _keys = Object.keys(query);
-    let keys = _.intersectionWith(_keys,whiteList)
+    let keys = _.intersectionWith(_keys, whiteList)
     let ret = {}
     keys.forEach(v => {
         ret[v] = decodeURIComponent(query[v])
@@ -65,10 +65,34 @@ function createNonceStr(length = 16, chars = "abcdefghijklmnopqrstuvwxyzABCDEFGH
 }
 // 字符取反
 function axorb(str) {
-    str = str + '';
+    return String(str).split('').map(v => String.fromCharCode(v.charCodeAt() ^ 0xff)).join('');
+    /* str = str + '';
     let arr = str.split('');
     let brr = arr.map(v => v.charCodeAt() ^ 0xff);
-    return brr.map(v => String.fromCharCode(v)).join('')
+    return brr.map(v => String.fromCharCode(v)).join('') */
+}
+/**
+ * 很好加密解密
+ */
+const hh_cypto = {
+    /**
+     * 字符取反
+     * @param {String} str 取反的字符
+     * @returns String
+     */
+    axorb: function (str = '') { return String(str).split('').map(v => String.fromCharCode(v.charCodeAt() ^ 0xff)).join('') },
+    /**
+     * 加密
+     * @param {String} str 需要加密的字符串
+     * @returns String
+     */
+    encode: function (str = '') { return Buffer.from(this.axorb(str), 'utf8').toString('base64') },
+    /**
+     * 解密
+     * @param {String} str 需要解密的字符串
+     * @returns String
+     */
+    decode: function (str = '') { return this.axorb(Buffer.from(str, 'base64').toString()) }
 }
 module.exports = {
     sql_buildSafeQuery,
@@ -76,5 +100,6 @@ module.exports = {
     sql_limit,
     cryptPassword,
     createNonceStr,
-    axorb
+    axorb,
+    hh_cypto
 }
