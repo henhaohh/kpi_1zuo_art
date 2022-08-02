@@ -17,6 +17,7 @@
         "queueLimit": 0,
         "port": 3306,
         "connectTimeout": 1e4,
+        "timezone":"+08:00",
         "debug": false
     }
 }
