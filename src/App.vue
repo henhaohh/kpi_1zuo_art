@@ -1,11 +1,11 @@
 <template>
-  <router-view />
+  <router-view class="animate__animated animate__fadeIn" />
 </template>
 
 <style>
 html,
 body {
-  font-size: calc(100vw / 72)!important;
+  font-size: calc(100vw / 72) !important;
 }
 
 body {

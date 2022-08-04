@@ -20,7 +20,9 @@
                     <div class="text-secondary fs-sm my-1">忘记密码请找管理员修改你的密码</div>
                 </div>
                 <div class="d-grid gap-2 mb-5">
-                    <button class="btn btn-danger btn-sm" :disabled="!userName || !userPassword">登录</button>
+                    <button class="btn btn-danger btn-sm" :disabled="!userName || !userPassword"
+                        @click="login()">登录</button>
+                    <div v-if="isLoginFailed" class="text-danger fs-sm">账号或密码错误!</div>
                 </div>
             </div>
         </div>
@@ -41,10 +43,6 @@
     </div>
 </template>
 <style scoped>
-.fs-sm {
-    font-size: 0.75rem;
-}
-
 .login {
     background-image: url('../assets/img/l6c4ysvb.png');
     background-size: contain;
@@ -86,6 +84,23 @@ export default {
             userName: "",
             userPassword: "",
             isOver: false, // 是否已经结束了
+            isLoginFailed: false, //是否登录失败
+        }
+    },
+    methods: {
+        login() {
+            if (this.userName === 'henhaohh' && this.userPassword === '123456') {
+                console.log(this.$router);
+                sessionStorage.setItem('isAuthenticationed', 'true');
+                this.$router.replace({ path: '/way' });
+            } else {
+                this.isLoginFailed = true;
+                setTimeout(() => {
+                    this.userName = '';
+                    this.userPassword = '';
+                    this.isLoginFailed = false;
+                }, 3e3);
+            }
         }
     }
 }

@@ -1,0 +1,16 @@
+.transform-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.fs-sm {
+    font-size: 0.75rem;
+}
+
+.link-inhert {
+    font-size: inherit;
+    color: inherit;
+    text-decoration: none;
+}
