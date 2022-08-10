@@ -49,6 +49,22 @@ const routes = [
         component: () => import('../views/KPI/Me/His.vue'),
       },
       {
+        path: 'zipin',
+        name: 'Kpi_me_zipin',
+        component: () => import('../views/KPI/Me/Zipin.vue'),
+        children: [
+          {
+            path: 'zhanli',
+            name: 'Kpi_me_zipin_zhanli',
+            component: () => import('../views/KPI/Me/Zipin/Zhanli.vue'),
+          },{
+            path: 'xinyang',
+            name: 'Kpi_me_zipin_xinyang',
+            component: () => import('../views/KPI/Me/Zipin/Xinyang.vue'),
+          },
+        ]
+      },
+      {
         path: 'team',
         name: 'Kpi_team',
         component: () => import('../views/KPI/Team.vue'),

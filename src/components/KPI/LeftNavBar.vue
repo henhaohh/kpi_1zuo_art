@@ -1,6 +1,6 @@
 <template>
     <aside
-        class="bg-white p-3 d-flex flex-column justify-content-between text-center sticky-top  animate__animated animate__fadeInLeft">
+        class="bg-white p-3 d-flex flex-column justify-content-between text-center sticky-top animate__animated animate__fadeInLeft">
         <router-link :to="{ path: '/way' }"><img src="@/assets/img/logo.png" class="logo m-auto" /></router-link>
         <div class="flex-fill d-flex align-items-center">
             <nav class="nav flex-column" v-if="$route.params.type">
@@ -46,12 +46,12 @@ export default {
                         label: "战情回顾",
                         to: "Kpi_me_his",
                         icon: '<i class="fa fa-clipboard-list"></i>'
-                    }/* ,
-                    {
-                        label: "",
-                        to: "c",
-                        icon: '<i class="fa-solid fa-file-zipper"></i>'
                     },
+                    {
+                        label: "战力自评",
+                        to: "Kpi_me_zipin_zhanli",
+                        icon: '<i class="fa-solid fa-file-zipper"></i>'
+                    }/* ,
                     {
                         label: "",
                         to: "d",
