@@ -30,7 +30,7 @@
 }
 </style>
 <script>
-import TopHeader from '../../../components/KPI/TopHeader.vue'
+import TopHeader from '@/components/KPI/TopHeader.vue'
 export default {
     data() {
         return {

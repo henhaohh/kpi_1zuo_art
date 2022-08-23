@@ -17,10 +17,10 @@
                 </div>
             </div>
         </div>
-        <div class="mb-4">
+        <div class="mb-5">
             <div class="fw-bold fs-4">综合评语</div>
             <div>
-                <textarea class="form-control" placeholder="点击填写(对⾃⼰的评语总结客观总结优缺点)"></textarea>
+                <textarea class="form-control" rows="3" placeholder="点击填写(对⾃⼰的评语总结客观总结优缺点)"></textarea>
             </div>
         </div>
         <div class="d-grid gap-2">

@@ -6,10 +6,14 @@
             <nav class="nav flex-column" v-if="$route.params.type">
                 <router-link class="nav-link" v-for="nav of navs[$route.params.type]"
                     :class="{ 'active': $route.name == nav.to }" :to="{ name: nav.to }" :key="nav.name"
-                    v-html="nav.icon" :title="nav.name"> </router-link>
+                    :title="nav.label">
+                    <IconVue :name="nav.icon" />
+                </router-link>
             </nav>
         </div>
-        <div><button class="btn" @click="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+        <div><button class="btn" @click="logout()">
+                <IconVue name="exit" />
+            </button>
         </div>
     </aside>
 </template>
@@ -32,6 +36,7 @@ aside {
 }
 </style>
 <script>
+import IconVue from '@/components/Icon.vue';
 export default {
     data() {
         return {
@@ -40,28 +45,28 @@ export default {
                     {
                         label: "我的战力",
                         to: "Kpi_me_index",
-                        icon: '<i class="fa fa-user"></i>'
+                        icon: 'Kpi_me_index'
                     },
                     {
                         label: "战情回顾",
                         to: "Kpi_me_his",
-                        icon: '<i class="fa fa-clipboard-list"></i>'
+                        icon: 'Kpi_me_his'
                     },
                     {
                         label: "战力自评",
                         to: "Kpi_me_zipin_zhanli",
-                        icon: '<i class="fa-solid fa-file-zipper"></i>'
-                    }/* ,
-                    {
-                        label: "",
-                        to: "d",
-                        icon: '<i class="fa-solid fa-user-plus"></i>'
+                        icon: 'Kpi_me_zipin_zhanli'
                     },
                     {
-                        label: "",
-                        to: "e",
-                        icon: '<i class="fa-solid fa-eye"></i>'
-                    } */
+                        label: "群像口碑",
+                        to: "Kpi_me_koubei",
+                        icon: 'Kpi_me_koubei'
+                    },
+                    {
+                        label: "我的“脱发”成绩单",
+                        to: "Kpi_me_chengji",
+                        icon: 'Kpi_me_chengji'
+                    }
                 ]
             }
         }
@@ -73,6 +78,9 @@ export default {
             sessionStorage.removeItem('isAuthenticationed');
             this.$router.replace({ path: '/' });
         }
+    },
+    components: {
+        IconVue
     }
 }
 </script>
